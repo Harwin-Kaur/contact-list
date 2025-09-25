@@ -71,9 +71,14 @@ const dislayContactList = (userList) => {
     console.log(userList);
 document.getElementById("list").style.display = "block";
 
-const str = `<div class="accordion-item">
+const str = "";
+
+
+        userList.map((item, i) => {
+
+            str += `<div class="accordion-item">
                         <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
                             <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="50px" class="rounded-circle">
                             <div class="ms-2">
                                 <div class="fw-bolder">George</div>
@@ -81,7 +86,7 @@ const str = `<div class="accordion-item">
                             </div>
                         </button>
                         </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapse${i}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body d-flex flex-column align-items-center">
                             <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="150px" class="rounded-circle">
                                 <div>
@@ -110,7 +115,7 @@ const str = `<div class="accordion-item">
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
                             <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="50px" class="rounded-circle">
                             <div class="ms-2">
                                 <div class="fw-bolder">George</div>
@@ -118,7 +123,7 @@ const str = `<div class="accordion-item">
                             </div>
                         </button>
                         </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapse${i}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body d-flex flex-column align-items-center">
                             <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="150px" class="rounded-circle">
                                 <div>
@@ -144,7 +149,9 @@ const str = `<div class="accordion-item">
 
                         </div>
                         </div>
-                    </div>`;
+                    </div>`
+
+        });
 
                     document.getElementById('accordionExample').innerHTML = str;
 
