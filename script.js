@@ -33,7 +33,21 @@ const displayAppScreen = ()=>{
     
 }
 
-const fetchUsers =  async(url) => {
+const dispContactScreen = ()=>{
+    //hide home screen
+
+    // document.querySelector(".homeScreen").style.display = "none";
+    document.querySelector(".appScreen").remove();
+
+    //show app screen
+
+    document.querySelector(".contactListScreen").style.display = "block"; //in html we used display none so here we are blocking that
+
+    fetchUsers(apiEP);
+    
+}
+
+const fetchUsers =  async (url) => {
 // const fetchUsers =  (url) => { 
 
     //fech the user
@@ -55,23 +69,23 @@ const fetchUsers =  async(url) => {
     userList = data.results;
     console.log(userList);
 
-    //hide the spinner
+    // hide the spinner
 
     document.querySelector(".showSpinner").style.display = "none";
 
-    //show the user
-dislayContactList(userList);
+    // show the user
+displayContactList(userList)
 };
 
-fetchUsers(apiEP);
+// display contact list
 
-//display contact list
-
-const dislayContactList = (userList) => {
+const displayContactList = (userList) => {
     console.log(userList);
+
+    //show the list
 document.getElementById("list").style.display = "block";
 
-const str = "";
+let str = "";
 
 
         userList.map((item, i) => {
@@ -79,33 +93,33 @@ const str = "";
             str += `<div class="accordion-item">
                         <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
-                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="50px" class="rounded-circle">
+                            <img src="${item.picture.large}" alt="" width="50px" class="rounded-circle">
                             <div class="ms-2">
-                                <div class="fw-bolder">George</div>
-                                <small>1 George st</small>
+                                <div class="fw-bolder">${item.name.title} ${item.name.first} ${item.name.last}</div>
+                                <small>${item.location.street.number} ${item.location.street.name}</small>
                             </div>
                         </button>
                         </h2>
-                        <div id="collapse${i}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div id="collapse${i}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body d-flex flex-column align-items-center">
-                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="150px" class="rounded-circle">
+                            <img src="${item.picture.large}" alt="" width="150px" class="rounded-circle">
                                 <div>
                                     <div class="fw-bolder">
                                         <i class="bi bi-person-circle"></i>
-                                        George
+                                        ${item.name.title} ${item.name.first} ${item.name.last}
                                     </div>
                                     <div>
-                                        <a href="tel: 0829128649"><i class="bi bi-phone-fill"></i>
-                                        0829128649</a>
+                                        <a href="tel: ${item.cell}"><i class="bi bi-phone-fill"></i>
+                                        ${item.cell}</a>
                                         
                                     </div>
                                     <div>
-                                    <a href="mailto:random@gmail.com"> <i class="bi bi-envelope-at-fill"></i>
-                                        random@gmail.com</a>
+                                    <a href="mailto: ${item.email}"> <i class="bi bi-envelope-at-fill"></i>
+                                        ${item.email}</a>
                                     </div>
                                     <div>
-                                        <a href="https://www.google.com/maps/place/1+George+St,+Sydney+NSW+2000" target="_blank"><i class="bi bi-globe"></i>
-                                        1 George st</a>
+                                        <a href="https://www.google.com/maps/place/${item.location.street.number}+${item.location.street.name}+${item.location.city}+${item.location.state}+${item.location.country}" target="_blank"><i class="bi bi-globe"></i>
+                                        ${item.location.street.number} ${item.location.street.name} ${item.location.street.state}</a>
                                     </div>
                                 </div>
 
@@ -113,46 +127,26 @@ const str = "";
                         </div>
                         </div>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${i}" aria-expanded="false" aria-controls="collapse${i}">
-                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="50px" class="rounded-circle">
-                            <div class="ms-2">
-                                <div class="fw-bolder">George</div>
-                                <small>1 George st</small>
-                            </div>
-                        </button>
-                        </h2>
-                        <div id="collapse${i}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                        <div class="accordion-body d-flex flex-column align-items-center">
-                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="" width="150px" class="rounded-circle">
-                                <div>
-                                    <div class="fw-bolder">
-                                        <i class="bi bi-person-circle"></i>
-                                        George
-                                    </div>
-                                    <div>
-                                        <a href="tel: 0829128649"><i class="bi bi-phone-fill"></i>
-                                        0829128649</a>
-                                        
-                                    </div>
-                                    <div>
-                                    <a href="mailto:random@gmail.com"> <i class="bi bi-envelope-at-fill"></i>
-                                        random@gmail.com</a>
-                                    </div>
-                                    <div>
-                                        <a href="https://www.google.com/maps/place/1+George+St,+Sydney+NSW+2000" target="_blank"><i class="bi bi-globe"></i>
-                                        1 George st</a>
-                                    </div>
-                                </div>
-
-
-                        </div>
-                        </div>
+                    
                     </div>`
 
         });
 
                     document.getElementById('accordionExample').innerHTML = str;
 
+                    document.getElementById("userCount").innerText = userList.length;
+
 }
+
+//Search contact
+
+document.getElementById("search").addEventListener("keyup", (e) => {
+const {value} = e.target;
+console.log(value);
+
+const fliteredUsers = userList.filter((item) => {
+    const name = (item.name.first + " " + item.name.last).toLowerCase();
+    return name.includes(value.toLowerCase());
+});
+displayContactList(fliteredUsers);
+});
