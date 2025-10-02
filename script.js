@@ -13,13 +13,13 @@ slider.addEventListener("change", (e) => {
     const label = document.getElementById("label");
     if(value > 70){
         label.textContent = "";
-        displayAppScreen();
+        disAppScreen();
     }else{
         label.textContent = "Slide to Unlock";
     }
 });             
 
-const displayAppScreen = ()=>{
+const disAppScreen = ()=>{
     //hide home screen
 
     // document.querySelector(".homeScreen").style.display = "none";
@@ -150,3 +150,5 @@ const fliteredUsers = userList.filter((item) => {
 });
 displayContactList(fliteredUsers);
 });
+
+
