@@ -150,5 +150,3 @@ const fliteredUsers = userList.filter((item) => {
 });
 displayContactList(fliteredUsers);
 });
-
-
